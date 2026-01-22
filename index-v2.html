@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Rainbow | Web3 Creative Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-pink: #FF2D92;
+            --neon-blue: #00D4FF;
+            --neon-purple: #B14EFF;
+            --neon-green: #00FF88;
+            --dark: #050508;
+            --darker: #020203;
+            --light: #ffffff;
+            --gray: #8892A0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient line accents */
+        .accent-line {
+            position: fixed;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, var(--neon-blue), var(--neon-purple), transparent);
+            opacity: 0.3;
+        }
+        .accent-line.left { left: 60px; }
+        .accent-line.right { right: 60px; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--dark), transparent);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        .nav-cta {
+            padding: 0.7rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--neon-blue);
+            color: var(--dark);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(177, 78, 255, 0.1);
+            border: 1px solid rgba(177, 78, 255, 0.3);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-purple);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeIn 0.6s 0.2s forwards;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 0.6s 0.3s forwards;
+        }
+
+        .hero-title .line {
+            display: block;
+        }
+
+        .hero-title .gradient {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray);
+            line-height: 1.8;
+            max-width: 550px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: fadeIn 0.6s 0.4s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.6s 0.7s forwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: var(--light);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 45, 146, 0.35);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--light);
+            background: rgba(255,255,255,0.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 3D Rainbow Bridge Styles */
+        .rainbow-scene {
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.5s forwards;
+        }
+
+        .rainbow-3d {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(177, 78, 255, 0.2));
+        }
+
+        /* Arc drawing animation */
+        .arc {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawArc 1.5s ease-out forwards;
+        }
+
+        .arc-1 { animation-delay: 0.1s; }
+        .arc-2 { animation-delay: 0.2s; }
+        .arc-3 { animation-delay: 0.3s; }
+        .arc-4 { animation-delay: 0.4s; }
+        .arc-5 { animation-delay: 0.5s; }
+        .arc-6 { animation-delay: 0.6s; }
+        .arc-7 { animation-delay: 0.7s; }
+
+        @keyframes drawArc {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Bridge floating animation */
+        .rainbow-bridge-group {
+            animation: bridgeFloat 5s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes bridgeFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.3deg); }
+        }
+
+        /* Platform pulse */
+        .platform {
+            animation: platformPulse 3s ease-in-out infinite;
+        }
+
+        .platform-right {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes platformPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Sparkle animations */
+        .sparkle {
+            opacity: 0;
+            animation: sparkle 2.5s ease-in-out infinite;
+        }
+
+        .s1 { animation-delay: 0s; }
+        .s2 { animation-delay: 0.4s; }
+        .s3 { animation-delay: 0.8s; }
+        .s4 { animation-delay: 1.2s; }
+        .s5 { animation-delay: 1.6s; }
+        .s6 { animation-delay: 2s; }
+        .s7 { animation-delay: 2.4s; }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Particle glow */
+        .particle {
+            filter: drop-shadow(0 0 6px currentColor);
+        }
+
+        /* Bridge labels */
+        .bridge-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            fill: var(--gray);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Reflection animation */
+        .rainbow-reflection {
+            animation: reflectionPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes reflectionPulse {
+            0%, 100% { opacity: 0.1; transform: scaleX(1); }
+            50% { opacity: 0.2; transform: scaleX(1.1); }
+        }
+
+        /* Services Section */
+        .services {
+            padding: 8rem 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            max-width: 400px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.12);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Work Section */
+        .work {
+            padding: 8rem 4rem;
+            background: linear-gradient(180deg, transparent, rgba(177, 78, 255, 0.03), transparent);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .work-item {
+            aspect-ratio: 4/3;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .work-item:hover {
+            transform: scale(1.02);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .work-item:hover .work-overlay {
+            opacity: 1;
+        }
+
+        .work-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.15);
+        }
+
+        .work-placeholder .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.5;
+        }
+
+        .work-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,8,0.95), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .work-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-cat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--neon-blue);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-inner {
+            max-width: 700px;
+        }
+
+        .contact-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .contact-title .gradient {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-text {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .contact-btn {
+            padding: 1.2rem 3rem;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-btn:hover {
+            background: var(--neon-blue);
+            color: var(--dark);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                padding: 7rem 2rem 4rem;
+            }
+
+            .rainbow-scene {
+                max-width: 100%;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accent-line {
+                display: none;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .services, .work, .contact {
+                padding: 5rem 1.5rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="accent-line left"></div>
+    <div class="accent-line right"></div>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🌈</div>
+            Virtual Rainbow
+        </div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Let's Talk</button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                Web3 Creative Studio
+            </div>
+            <h1 class="hero-title">
+                <span class="line">Building</span>
+                <span class="line gradient">Virtual Worlds</span>
+                <span class="line">For Brands</span>
+            </h1>
+            <p class="hero-subtitle">
+                We create immersive experiences, virtual environments, and digital collectibles. Helping Web2 brands bridge seamlessly into Web3.
+            </p>
+
+            <!-- Animated 3D Rainbow Bridge -->
+            <div class="rainbow-scene">
+                <svg class="rainbow-3d" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- 3D Gradients for each band -->
+                        <linearGradient id="pink3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF5CAD"/>
+                            <stop offset="50%" style="stop-color:#FF2D92"/>
+                            <stop offset="100%" style="stop-color:#CC2475"/>
+                        </linearGradient>
+                        <linearGradient id="purple3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#C86EFF"/>
+                            <stop offset="50%" style="stop-color:#B14EFF"/>
+                            <stop offset="100%" style="stop-color:#8E3ECC"/>
+                        </linearGradient>
+                        <linearGradient id="blue3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#33E0FF"/>
+                            <stop offset="50%" style="stop-color:#00D4FF"/>
+                            <stop offset="100%" style="stop-color:#00AACC"/>
+                        </linearGradient>
+                        <linearGradient id="cyan3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#33FFCC"/>
+                            <stop offset="50%" style="stop-color:#00FFAA"/>
+                            <stop offset="100%" style="stop-color:#00CC88"/>
+                        </linearGradient>
+                        <linearGradient id="green3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#33FFA8"/>
+                            <stop offset="50%" style="stop-color:#00FF88"/>
+                            <stop offset="100%" style="stop-color:#00CC6D"/>
+                        </linearGradient>
+                        <linearGradient id="yellow3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFE566"/>
+                            <stop offset="50%" style="stop-color:#FFD700"/>
+                            <stop offset="100%" style="stop-color:#CCAC00"/>
+                        </linearGradient>
+                        <linearGradient id="orange3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFB366"/>
+                            <stop offset="50%" style="stop-color:#FF9500"/>
+                            <stop offset="100%" style="stop-color:#CC7700"/>
+                        </linearGradient>
+                        
+                        <!-- Glow filters -->
+                        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        
+                        <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="15" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Reflection/Shadow -->
+                    <g class="rainbow-reflection" opacity="0.15">
+                        <ellipse cx="250" cy="280" rx="180" ry="20" fill="url(#blue3d)"/>
+                    </g>
+                    
+                    <!-- Platform circles (entry/exit points) -->
+                    <ellipse class="platform platform-left" cx="60" cy="240" rx="45" ry="12" fill="rgba(177,78,255,0.3)" stroke="url(#purple3d)" stroke-width="2"/>
+                    <ellipse class="platform platform-right" cx="440" cy="240" rx="45" ry="12" fill="rgba(0,212,255,0.3)" stroke="url(#blue3d)" stroke-width="2"/>
+                    
+                    <!-- Main rainbow bridge -->
+                    <g class="rainbow-bridge-group" filter="url(#neonGlow)">
+                        <!-- Orange (outermost) -->
+                        <path class="arc arc-1" d="M 60 240 Q 250 20 440 240" fill="none" stroke="url(#orange3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Yellow -->
+                        <path class="arc arc-2" d="M 60 240 Q 250 40 440 240" fill="none" stroke="url(#yellow3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Green -->
+                        <path class="arc arc-3" d="M 60 240 Q 250 60 440 240" fill="none" stroke="url(#green3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Cyan -->
+                        <path class="arc arc-4" d="M 60 240 Q 250 80 440 240" fill="none" stroke="url(#cyan3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Blue -->
+                        <path class="arc arc-5" d="M 60 240 Q 250 100 440 240" fill="none" stroke="url(#blue3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Purple -->
+                        <path class="arc arc-6" d="M 60 240 Q 250 120 440 240" fill="none" stroke="url(#purple3d)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Pink (innermost) -->
+                        <path class="arc arc-7" d="M 60 240 Q 250 140 440 240" fill="none" stroke="url(#pink3d)" stroke-width="14" stroke-linecap="round"/>
+                    </g>
+                    
+                    <!-- Animated particles traveling along the bridge -->
+                    <g class="particles">
+                        <circle class="particle p1" r="4" fill="#fff">
+                            <animateMotion dur="3s" repeatCount="indefinite" path="M 60 240 Q 250 80 440 240"/>
+                        </circle>
+                        <circle class="particle p2" r="3" fill="#00D4FF">
+                            <animateMotion dur="4s" repeatCount="indefinite" path="M 60 240 Q 250 60 440 240" begin="1s"/>
+                        </circle>
+                        <circle class="particle p3" r="3" fill="#B14EFF">
+                            <animateMotion dur="3.5s" repeatCount="indefinite" path="M 60 240 Q 250 100 440 240" begin="2s"/>
+                        </circle>
+                        <circle class="particle p4" r="2" fill="#00FF88">
+                            <animateMotion dur="4.5s" repeatCount="indefinite" path="M 60 240 Q 250 40 440 240" begin="0.5s"/>
+                        </circle>
+                    </g>
+                    
+                    <!-- Sparkles -->
+                    <g class="sparkles">
+                        <circle class="sparkle s1" cx="150" cy="120" r="3" fill="#fff"/>
+                        <circle class="sparkle s2" cx="250" cy="70" r="4" fill="#fff"/>
+                        <circle class="sparkle s3" cx="350" cy="120" r="3" fill="#fff"/>
+                        <circle class="sparkle s4" cx="200" cy="150" r="2" fill="#fff"/>
+                        <circle class="sparkle s5" cx="300" cy="150" r="2" fill="#fff"/>
+                        <circle class="sparkle s6" cx="120" cy="180" r="2" fill="#fff"/>
+                        <circle class="sparkle s7" cx="380" cy="180" r="2" fill="#fff"/>
+                    </g>
+                    
+                    <!-- Labels -->
+                    <text x="60" y="270" text-anchor="middle" class="bridge-label">WEB2</text>
+                    <text x="440" y="270" text-anchor="middle" class="bridge-label">WEB3</text>
+                </svg>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#work" class="btn btn-primary">View Projects →</a>
+                <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="section-header">
+            <div>
+                <p class="section-label">// Services</p>
+                <h2 class="section-title">What We Build</h2>
+            </div>
+            <p class="section-desc">
+                End-to-end Web3 creative services for brands ready to enter the new digital frontier.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-num">01</div>
+                <div class="service-icon">🌐</div>
+                <h3 class="service-title">Virtual Worlds</h3>
+                <p class="service-desc">Custom metaverse environments and branded virtual spaces that captivate communities.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-num">02</div>
+                <div class="service-icon">💎</div>
+                <h3 class="service-title">Digital Collectibles</h3>
+                <p class="service-desc">NFT collections with compelling art, utility, and tokenomics from concept to mint.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-num">03</div>
+                <div class="service-icon">🌉</div>
+                <h3 class="service-title">Web3 Strategy</h3>
+                <p class="service-desc">Guiding established brands through the complexities of blockchain integration.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-num">04</div>
+                <div class="service-icon">✨</div>
+                <h3 class="service-title">XR Experiences</h3>
+                <p class="service-desc">AR, VR, and mixed reality activations that blur physical and digital boundaries.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="work" id="work">
+        <div class="section-header">
+            <div>
+                <p class="section-label">// Portfolio</p>
+                <h2 class="section-title">Selected Work</h2>
+            </div>
+        </div>
+
+        <div class="work-grid">
+            <div class="work-item">
+                <div class="work-placeholder">
+                    <span class="num">01</span>
+                </div>
+                <div class="work-overlay">
+                    <h3 class="work-title">Project Name</h3>
+                    <p class="work-cat">Virtual World</p>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-placeholder">
+                    <span class="num">02</span>
+                </div>
+                <div class="work-overlay">
+                    <h3 class="work-title">Project Name</h3>
+                    <p class="work-cat">NFT Collection</p>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-placeholder">
+                    <span class="num">03</span>
+                </div>
+                <div class="work-overlay">
+                    <h3 class="work-title">Project Name</h3>
+                    <p class="work-cat">Brand Activation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-inner">
+            <h2 class="contact-title">Ready to Build<br><span class="gradient">Something New?</span></h2>
+            <p class="contact-text">
+                Whether you're exploring your first NFT drop, launching a metaverse presence, or reimagining your brand for Web3 — let's make it happen.
+            </p>
+            <a href="mailto:hello@virtualrainbow.com" class="contact-btn">Start a Conversation</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-left">© 2026 Virtual Rainbow</div>
+        <div class="footer-links">
+            <a href="#">Twitter</a>
+            <a href="#">Discord</a>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+</body>
+</html>
