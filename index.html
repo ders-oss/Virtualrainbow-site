@@ -138,7 +138,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 8rem 4rem 4rem;
+            padding: 8rem 4rem 2rem;
             position: relative;
             text-align: center;
         }
@@ -263,10 +263,11 @@
         /* 3D Rainbow Bridge Styles */
         .rainbow-scene {
             width: 100%;
-            max-width: 550px;
-            margin: 0 auto 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 4rem 0;
             opacity: 0;
-            animation: fadeIn 0.8s 0.5s forwards;
+            animation: fadeIn 0.8s 0.7s forwards;
         }
 
         .rainbow-3d {
@@ -637,10 +638,11 @@
 
         @media (max-width: 900px) {
             .hero {
-                padding: 7rem 2rem 4rem;
+                padding: 7rem 2rem 2rem;
             }
 
             .rainbow-scene {
+                padding: 2rem 1.5rem 0;
                 max-width: 100%;
             }
 
@@ -710,126 +712,121 @@
                 We create immersive experiences, virtual environments, and digital collectibles. Helping Web2 brands bridge seamlessly into Web3.
             </p>
 
-            <!-- Animated 3D Rainbow Bridge -->
-            <div class="rainbow-scene">
-                <svg class="rainbow-3d" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <!-- 3D Gradients for each band -->
-                        <linearGradient id="pink3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#FF5CAD"/>
-                            <stop offset="50%" style="stop-color:#FF2D92"/>
-                            <stop offset="100%" style="stop-color:#CC2475"/>
-                        </linearGradient>
-                        <linearGradient id="purple3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#C86EFF"/>
-                            <stop offset="50%" style="stop-color:#B14EFF"/>
-                            <stop offset="100%" style="stop-color:#8E3ECC"/>
-                        </linearGradient>
-                        <linearGradient id="blue3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#33E0FF"/>
-                            <stop offset="50%" style="stop-color:#00D4FF"/>
-                            <stop offset="100%" style="stop-color:#00AACC"/>
-                        </linearGradient>
-                        <linearGradient id="cyan3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#33FFCC"/>
-                            <stop offset="50%" style="stop-color:#00FFAA"/>
-                            <stop offset="100%" style="stop-color:#00CC88"/>
-                        </linearGradient>
-                        <linearGradient id="green3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#33FFA8"/>
-                            <stop offset="50%" style="stop-color:#00FF88"/>
-                            <stop offset="100%" style="stop-color:#00CC6D"/>
-                        </linearGradient>
-                        <linearGradient id="yellow3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#FFE566"/>
-                            <stop offset="50%" style="stop-color:#FFD700"/>
-                            <stop offset="100%" style="stop-color:#CCAC00"/>
-                        </linearGradient>
-                        <linearGradient id="orange3d" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#FFB366"/>
-                            <stop offset="50%" style="stop-color:#FF9500"/>
-                            <stop offset="100%" style="stop-color:#CC7700"/>
-                        </linearGradient>
-                        
-                        <!-- Glow filters -->
-                        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
-                            <feMerge>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                        
-                        <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="15" result="blur"/>
-                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                        </filter>
-                    </defs>
-                    
-                    <!-- Reflection/Shadow -->
-                    <g class="rainbow-reflection" opacity="0.15">
-                        <ellipse cx="250" cy="280" rx="180" ry="20" fill="url(#blue3d)"/>
-                    </g>
-                    
-                    <!-- Platform circles (entry/exit points) -->
-                    <ellipse class="platform platform-left" cx="60" cy="240" rx="45" ry="12" fill="rgba(177,78,255,0.3)" stroke="url(#purple3d)" stroke-width="2"/>
-                    <ellipse class="platform platform-right" cx="440" cy="240" rx="45" ry="12" fill="rgba(0,212,255,0.3)" stroke="url(#blue3d)" stroke-width="2"/>
-                    
-                    <!-- Main rainbow bridge -->
-                    <g class="rainbow-bridge-group" filter="url(#neonGlow)">
-                        <!-- Orange (outermost) -->
-                        <path class="arc arc-1" d="M 60 240 Q 250 20 440 240" fill="none" stroke="url(#orange3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Yellow -->
-                        <path class="arc arc-2" d="M 60 240 Q 250 40 440 240" fill="none" stroke="url(#yellow3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Green -->
-                        <path class="arc arc-3" d="M 60 240 Q 250 60 440 240" fill="none" stroke="url(#green3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Cyan -->
-                        <path class="arc arc-4" d="M 60 240 Q 250 80 440 240" fill="none" stroke="url(#cyan3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Blue -->
-                        <path class="arc arc-5" d="M 60 240 Q 250 100 440 240" fill="none" stroke="url(#blue3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Purple -->
-                        <path class="arc arc-6" d="M 60 240 Q 250 120 440 240" fill="none" stroke="url(#purple3d)" stroke-width="14" stroke-linecap="round"/>
-                        <!-- Pink (innermost) -->
-                        <path class="arc arc-7" d="M 60 240 Q 250 140 440 240" fill="none" stroke="url(#pink3d)" stroke-width="14" stroke-linecap="round"/>
-                    </g>
-                    
-                    <!-- Animated particles traveling along the bridge -->
-                    <g class="particles">
-                        <circle class="particle p1" r="4" fill="#fff">
-                            <animateMotion dur="3s" repeatCount="indefinite" path="M 60 240 Q 250 80 440 240"/>
-                        </circle>
-                        <circle class="particle p2" r="3" fill="#00D4FF">
-                            <animateMotion dur="4s" repeatCount="indefinite" path="M 60 240 Q 250 60 440 240" begin="1s"/>
-                        </circle>
-                        <circle class="particle p3" r="3" fill="#B14EFF">
-                            <animateMotion dur="3.5s" repeatCount="indefinite" path="M 60 240 Q 250 100 440 240" begin="2s"/>
-                        </circle>
-                        <circle class="particle p4" r="2" fill="#00FF88">
-                            <animateMotion dur="4.5s" repeatCount="indefinite" path="M 60 240 Q 250 40 440 240" begin="0.5s"/>
-                        </circle>
-                    </g>
-                    
-                    <!-- Sparkles -->
-                    <g class="sparkles">
-                        <circle class="sparkle s1" cx="150" cy="120" r="3" fill="#fff"/>
-                        <circle class="sparkle s2" cx="250" cy="70" r="4" fill="#fff"/>
-                        <circle class="sparkle s3" cx="350" cy="120" r="3" fill="#fff"/>
-                        <circle class="sparkle s4" cx="200" cy="150" r="2" fill="#fff"/>
-                        <circle class="sparkle s5" cx="300" cy="150" r="2" fill="#fff"/>
-                        <circle class="sparkle s6" cx="120" cy="180" r="2" fill="#fff"/>
-                        <circle class="sparkle s7" cx="380" cy="180" r="2" fill="#fff"/>
-                    </g>
-                    
-                    <!-- Labels -->
-                    <text x="60" y="270" text-anchor="middle" class="bridge-label">WEB2</text>
-                    <text x="440" y="270" text-anchor="middle" class="bridge-label">WEB3</text>
-                </svg>
-            </div>
-
             <div class="hero-cta">
                 <a href="#work" class="btn btn-primary">View Projects →</a>
                 <a href="#contact" class="btn btn-ghost">Get In Touch</a>
             </div>
+        </div>
+
+        <!-- Animated 3D Rainbow Bridge -->
+        <div class="rainbow-scene">
+            <svg class="rainbow-3d" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- 3D Gradients for each band -->
+                    <linearGradient id="pink3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF5CAD"/>
+                        <stop offset="50%" style="stop-color:#FF2D92"/>
+                        <stop offset="100%" style="stop-color:#CC2475"/>
+                    </linearGradient>
+                    <linearGradient id="purple3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#C86EFF"/>
+                        <stop offset="50%" style="stop-color:#B14EFF"/>
+                        <stop offset="100%" style="stop-color:#8E3ECC"/>
+                    </linearGradient>
+                    <linearGradient id="blue3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#33E0FF"/>
+                        <stop offset="50%" style="stop-color:#00D4FF"/>
+                        <stop offset="100%" style="stop-color:#00AACC"/>
+                    </linearGradient>
+                    <linearGradient id="cyan3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#33FFCC"/>
+                        <stop offset="50%" style="stop-color:#00FFAA"/>
+                        <stop offset="100%" style="stop-color:#00CC88"/>
+                    </linearGradient>
+                    <linearGradient id="green3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#33FFA8"/>
+                        <stop offset="50%" style="stop-color:#00FF88"/>
+                        <stop offset="100%" style="stop-color:#00CC6D"/>
+                    </linearGradient>
+                    <linearGradient id="yellow3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFE566"/>
+                        <stop offset="50%" style="stop-color:#FFD700"/>
+                        <stop offset="100%" style="stop-color:#CCAC00"/>
+                    </linearGradient>
+                    <linearGradient id="orange3d" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFB366"/>
+                        <stop offset="50%" style="stop-color:#FF9500"/>
+                        <stop offset="100%" style="stop-color:#CC7700"/>
+                    </linearGradient>
+                    
+                    <!-- Glow filters -->
+                    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Reflection/Shadow -->
+                <g class="rainbow-reflection" opacity="0.15">
+                    <ellipse cx="250" cy="280" rx="180" ry="20" fill="url(#blue3d)"/>
+                </g>
+                
+                <!-- Platform circles (entry/exit points) -->
+                <ellipse class="platform platform-left" cx="60" cy="240" rx="45" ry="12" fill="rgba(177,78,255,0.3)" stroke="url(#purple3d)" stroke-width="2"/>
+                <ellipse class="platform platform-right" cx="440" cy="240" rx="45" ry="12" fill="rgba(0,212,255,0.3)" stroke="url(#blue3d)" stroke-width="2"/>
+                
+                <!-- Main rainbow bridge -->
+                <g class="rainbow-bridge-group" filter="url(#neonGlow)">
+                    <!-- Orange (outermost) -->
+                    <path class="arc arc-1" d="M 60 240 Q 250 20 440 240" fill="none" stroke="url(#orange3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Yellow -->
+                    <path class="arc arc-2" d="M 60 240 Q 250 40 440 240" fill="none" stroke="url(#yellow3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Green -->
+                    <path class="arc arc-3" d="M 60 240 Q 250 60 440 240" fill="none" stroke="url(#green3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Cyan -->
+                    <path class="arc arc-4" d="M 60 240 Q 250 80 440 240" fill="none" stroke="url(#cyan3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Blue -->
+                    <path class="arc arc-5" d="M 60 240 Q 250 100 440 240" fill="none" stroke="url(#blue3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Purple -->
+                    <path class="arc arc-6" d="M 60 240 Q 250 120 440 240" fill="none" stroke="url(#purple3d)" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Pink (innermost) -->
+                    <path class="arc arc-7" d="M 60 240 Q 250 140 440 240" fill="none" stroke="url(#pink3d)" stroke-width="14" stroke-linecap="round"/>
+                </g>
+                
+                <!-- Animated particles traveling along the bridge -->
+                <g class="particles">
+                    <circle class="particle p1" r="4" fill="#fff">
+                        <animateMotion dur="3s" repeatCount="indefinite" path="M 60 240 Q 250 80 440 240"/>
+                    </circle>
+                    <circle class="particle p2" r="3" fill="#00D4FF">
+                        <animateMotion dur="4s" repeatCount="indefinite" path="M 60 240 Q 250 60 440 240" begin="1s"/>
+                    </circle>
+                    <circle class="particle p3" r="3" fill="#B14EFF">
+                        <animateMotion dur="3.5s" repeatCount="indefinite" path="M 60 240 Q 250 100 440 240" begin="2s"/>
+                    </circle>
+                    <circle class="particle p4" r="2" fill="#00FF88">
+                        <animateMotion dur="4.5s" repeatCount="indefinite" path="M 60 240 Q 250 40 440 240" begin="0.5s"/>
+                    </circle>
+                </g>
+                
+                <!-- Sparkles -->
+                <g class="sparkles">
+                    <circle class="sparkle s1" cx="150" cy="120" r="3" fill="#fff"/>
+                    <circle class="sparkle s2" cx="250" cy="70" r="4" fill="#fff"/>
+                    <circle class="sparkle s3" cx="350" cy="120" r="3" fill="#fff"/>
+                    <circle class="sparkle s4" cx="200" cy="150" r="2" fill="#fff"/>
+                    <circle class="sparkle s5" cx="300" cy="150" r="2" fill="#fff"/>
+                    <circle class="sparkle s6" cx="120" cy="180" r="2" fill="#fff"/>
+                    <circle class="sparkle s7" cx="380" cy="180" r="2" fill="#fff"/>
+                </g>
+                
+                <!-- Labels -->
+                <text x="60" y="270" text-anchor="middle" class="bridge-label">WEB2</text>
+                <text x="440" y="270" text-anchor="middle" class="bridge-label">WEB3</text>
+            </svg>
         </div>
     </section>
 
@@ -922,7 +919,7 @@
             <p class="contact-text">
                 Whether you're exploring your first NFT drop, launching a metaverse presence, or reimagining your brand for Web3 — let's make it happen.
             </p>
-            <a href="mailto:hello@virtualrainbow.com" class="contact-btn">Start a Conversation</a>
+            <a href="/cdn-cgi/l/email-protection#b2dad7dededdf2c4dbc0c6c7d3dec0d3dbdcd0ddc59cd1dddf" class="contact-btn">Start a Conversation</a>
         </div>
     </section>
 
@@ -932,8 +929,4 @@
             <a href="#">Twitter</a>
             <a href="#">Discord</a>
             <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
-        </div>
-    </footer>
-</body>
-</html>
+            <a href="#">LinkedIn</a
