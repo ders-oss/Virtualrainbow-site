@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vild Collectibles – VildIs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vild-cream: #FAF8F5;
+            --vild-dark: #1a1a1a;
+            --vild-green: #4A7C59;
+            --vild-orange: #E8A54B;
+            --vild-red: #D64550;
+            --vild-purple: #6B4D8A;
+            --vild-blue: #4A90A4;
+            --text-dark: #1a1a1a;
+            --text-muted: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--vild-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 36px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+        }
+
+        .nav-btn {
+            background: var(--text-dark);
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            opacity: 1 !important;
+        }
+
+        /* Hero Section - Immersive */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(74, 124, 89, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(232, 165, 75, 0.05) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        /* Floating Collectibles */
+        .floating-collectibles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .float-berry {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            opacity: 0.15;
+            animation: floatCollectible 20s infinite ease-in-out;
+        }
+
+        .float-berry:nth-child(1) { left: 8%; top: 20%; animation-delay: 0s; }
+        .float-berry:nth-child(2) { right: 12%; top: 25%; animation-delay: 4s; }
+        .float-berry:nth-child(3) { left: 15%; bottom: 25%; animation-delay: 8s; }
+        .float-berry:nth-child(4) { right: 8%; bottom: 30%; animation-delay: 12s; }
+
+        .float-berry .berry-body {
+            width: 60px;
+            height: 70px;
+            border-radius: 45% 45% 50% 50%;
+            margin: 15px auto 0;
+            position: relative;
+        }
+
+        .float-berry:nth-child(1) .berry-body { background: linear-gradient(145deg, #7CB342, #558B2F); }
+        .float-berry:nth-child(2) .berry-body { background: linear-gradient(145deg, #FFB74D, #F57C00); }
+        .float-berry:nth-child(3) .berry-body { background: linear-gradient(145deg, #9575CD, #5E35B1); }
+        .float-berry:nth-child(4) .berry-body { background: linear-gradient(145deg, #EF5350, #C62828); }
+
+        .float-berry .stem {
+            width: 6px;
+            height: 18px;
+            background: #4CAF50;
+            border-radius: 3px;
+            margin: 0 auto;
+        }
+
+        @keyframes floatCollectible {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(-3deg); }
+            75% { transform: translateY(-40px) rotate(3deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--text-dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .hero-badge::before {
+            content: '✦';
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        h1 {
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            line-height: 1.7;
+        }
+
+        /* CTA Buttons */
+        .hero-ctas {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--text-dark);
+            color: white;
+            padding: 18px 36px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .btn-enter {
+            background: linear-gradient(135deg, var(--vild-purple), #9B59B6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-enter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .btn-enter .icon {
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Collection Section */
+        .collection-section {
+            padding: 100px 40px;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .section-header h3 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Collection Grid */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .collection-card {
+            background: var(--vild-cream);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+            cursor: pointer;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+
+        .card-visual {
+            height: 260px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .collection-card:nth-child(1) .card-visual { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+        .collection-card:nth-child(2) .card-visual { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+        .collection-card:nth-child(3) .card-visual { background: linear-gradient(135deg, #F3E5F5, #E1BEE7); }
+
+        .rarity-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .collection-card:nth-child(1) .rarity-badge { background: var(--vild-green); }
+        .collection-card:nth-child(2) .rarity-badge { background: var(--vild-orange); }
+        .collection-card:nth-child(3) .rarity-badge { background: var(--vild-purple); }
+
+        /* 3D Berry Avatar */
+        .avatar-3d {
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .berry-character {
+            position: relative;
+            width: 100px;
+            height: 130px;
+        }
+
+        .berry-body-main {
+            width: 80px;
+            height: 95px;
+            border-radius: 45% 45% 50% 50%;
+            margin: 25px auto 0;
+            position: relative;
+            box-shadow: 
+                inset -15px -15px 30px rgba(0,0,0,0.15),
+                inset 10px 10px 20px rgba(255,255,255,0.2),
+                0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .collection-card:nth-child(1) .berry-body-main { background: linear-gradient(145deg, #7CB342, #558B2F); }
+        .collection-card:nth-child(2) .berry-body-main { background: linear-gradient(145deg, #FFB74D, #F57C00); }
+        .collection-card:nth-child(3) .berry-body-main { background: linear-gradient(145deg, #9575CD, #5E35B1); }
+
+        .face {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .eye {
+            width: 18px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+        }
+
+        .eye::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            top: 25%;
+            right: 25%;
+            z-index: 1;
+        }
+
+        .mouth {
+            width: 16px;
+            height: 10px;
+            background: #1a1a1a;
+            border-radius: 0 0 50px 50px;
+            margin: 8px auto 0;
+        }
+
+        .stem-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .stem-main {
+            width: 6px;
+            height: 18px;
+            background: linear-gradient(to right, #66BB6A, #43A047);
+            border-radius: 3px;
+            margin: 0 auto;
+        }
+
+        .leaves-top {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+
+        .leaf {
+            width: 20px;
+            height: 12px;
+            background: linear-gradient(135deg, #81C784, #4CAF50);
+            border-radius: 50% 0 50% 50%;
+        }
+
+        .leaf.left { transform: rotate(-40deg) translateX(-5px); }
+        .leaf.right { transform: rotate(40deg) scaleX(-1) translateX(-5px); }
+
+        /* Crown for epic */
+        .collection-card:nth-child(3) .crown {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            animation: crownBob 2s infinite ease-in-out;
+        }
+
+        @keyframes crownBob {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(-5deg); }
+            50% { transform: translateX(-50%) translateY(-5px) rotate(5deg); }
+        }
+
+        .card-info {
+            padding: 25px;
+        }
+
+        .card-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* How It Works */
+        .how-section {
+            padding: 100px 40px;
+        }
+
+        .how-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .how-step {
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .how-step h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .how-step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Virtual World Section */
+        .world-section {
+            background: var(--text-dark);
+            padding: 120px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(155, 89, 182, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(74, 124, 89, 0.15) 0%, transparent 50%);
+        }
+
+        /* Animated grid */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
+        }
+
+        .world-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .world-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .world-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        .world-content p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 50px;
+            line-height: 1.7;
+        }
+
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--vild-purple), #9B59B6, var(--vild-red));
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            color: white;
+            padding: 22px 50px;
+            border-radius: 100px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(155, 89, 182, 0.4);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(155, 89, 182, 0.5);
+        }
+
+        .enter-btn .arrow {
+            font-size: 1.4rem;
+            transition: transform 0.3s;
+        }
+
+        .enter-btn:hover .arrow {
+            transform: translateX(5px);
+        }
+
+        /* Portal visual */
+        .portal-visual {
+            margin-top: 80px;
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portal-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(155, 89, 182, 0.3);
+            animation: portalPulse 3s infinite ease-in-out;
+        }
+
+        .portal-ring:nth-child(1) { width: 150px; height: 150px; animation-delay: 0s; }
+        .portal-ring:nth-child(2) { width: 200px; height: 200px; animation-delay: 0.5s; }
+        .portal-ring:nth-child(3) { width: 250px; height: 250px; animation-delay: 1s; }
+
+        @keyframes portalPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+        }
+
+        .portal-center {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(155, 89, 182, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            animation: portalGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes portalGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(155, 89, 182, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(155, 89, 182, 0.8); }
+        }
+
+        /* Auth Section */
+        .auth-section {
+            padding: 100px 40px;
+            background: white;
+        }
+
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .auth-box {
+            background: var(--vild-cream);
+            border-radius: 32px;
+            padding: 50px 40px;
+            margin-top: 40px;
+        }
+
+        .auth-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .auth-box p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .email-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 16px 24px;
+            border: 2px solid rgba(0,0,0,0.08);
+            border-radius: 100px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--vild-purple);
+        }
+
+        .email-input::placeholder {
+            color: #aaa;
+        }
+
+        .auth-btn {
+            padding: 16px 28px;
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .auth-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .auth-note a {
+            color: var(--vild-purple);
+            text-decoration: none;
+        }
+
+        /* Powered by */
+        .powered-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .powered-by .glyph-logo {
+            height: 16px;
+            opacity: 0.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .collection-section,
+            .how-section,
+            .world-section,
+            .auth-section {
+                padding: 60px 20px;
+            }
+
+            .how-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .email-input-group {
+                flex-direction: column;
+            }
+
+            .auth-box {
+                padding: 40px 25px;
+            }
+
+            .floating-collectibles {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="https://vildis.dk" class="logo">
+            <img src="https://vildis.dk/cdn/shop/files/Logo_VildIs_569e82f2-58d2-44dc-b0f9-ca43007f07d5.png?v=1710005181&width=600" alt="VildIs Logo">
+        </a>
+        <nav>
+            <a href="#samling">Samling</a>
+            <a href="#verden">Vild Verden</a>
+            <a href="https://vildis.dk/collections/all">Shop</a>
+            <a href="#login" class="nav-btn">Log ind</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        
+        <!-- Floating collectibles -->
+        <div class="floating-collectibles">
+            <div class="float-berry">
+                <div class="stem"></div>
+                <div class="berry-body"></div>
+            </div>
+            <div class="float-berry">
+                <div class="stem"></div>
+                <div class="berry-body"></div>
+            </div>
+            <div class="float-berry">
+                <div class="stem"></div>
+                <div class="berry-body"></div>
+            </div>
+            <div class="float-berry">
+                <div class="stem"></div>
+                <div class="berry-body"></div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <span class="hero-badge">Digital Samling</span>
+            <h1>Vild Collectibles</h1>
+            <p class="hero-subtitle">Saml unikke digitale bær-avatarer når du køber Vild Is produkter. Log ind med din email og udforsk din samling – eller træd ind i Vild Verden!</p>
+            
+            <div class="hero-ctas">
+                <a href="#login" class="btn-primary">
+                    Se min samling
+                </a>
+                <a href="#verden" class="btn-primary btn-enter">
+                    <span class="icon">🌍</span>
+                    Enter Vild Verden
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            Scroll
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section class="collection-section" id="samling">
+        <div class="section-header">
+            <h2>Samlingen</h2>
+            <h3>Mød bær-karaktererne</h3>
+            <p>Hver karakter har sin egen sjæl og historie. Saml dem alle!</p>
+        </div>
+
+        <div class="collection-grid">
+            <!-- Common -->
+            <div class="collection-card">
+                <div class="card-visual">
+                    <span class="rarity-badge">Common</span>
+                    <div class="avatar-3d">
+                        <div class="berry-character">
+                            <div class="stem-top">
+                                <div class="stem-main"></div>
+                                <div class="leaves-top">
+                                    <div class="leaf left"></div>
+                                    <div class="leaf right"></div>
+                                </div>
+                            </div>
+                            <div class="berry-body-main">
+                                <div class="face">
+                                    <div class="eyes">
+                                        <div class="eye"></div>
+                                        <div class="eye"></div>
+                                    </div>
+                                    <div class="mouth"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h3 class="card-name">Ribs Don't Lie</h3>
+                    <p class="card-desc">60% drop rate</p>
+                </div>
+            </div>
+
+            <!-- Rare -->
+            <div class="collection-card">
+                <div class="card-visual">
+                    <span class="rarity-badge">Rare</span>
+                    <div class="avatar-3d">
+                        <div class="berry-character">
+                            <div class="stem-top">
+                                <div class="stem-main"></div>
+                                <div class="leaves-top">
+                                    <div class="leaf left"></div>
+                                    <div class="leaf right"></div>
+                                </div>
+                            </div>
+                            <div class="berry-body-main">
+                                <div class="face">
+                                    <div class="eyes">
+                                        <div class="eye"></div>
+                                        <div class="eye"></div>
+                                    </div>
+                                    <div class="mouth"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h3 class="card-name">Hellé Havtorning</h3>
+                    <p class="card-desc">30% drop rate</p>
+                </div>
+            </div>
+
+            <!-- Epic -->
+            <div class="collection-card">
+                <div class="card-visual">
+                    <span class="rarity-badge">Epic</span>
+                    <div class="avatar-3d">
+                        <div class="berry-character">
+                            <span class="crown">👑</span>
+                            <div class="stem-top">
+                                <div class="stem-main"></div>
+                                <div class="leaves-top">
+                                    <div class="leaf left"></div>
+                                    <div class="leaf right"></div>
+                                </div>
+                            </div>
+                            <div class="berry-body-main">
+                                <div class="face">
+                                    <div class="eyes">
+                                        <div class="eye"></div>
+                                        <div class="eye"></div>
+                                    </div>
+                                    <div class="mouth"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h3 class="card-name">Aronia Røverdatter</h3>
+                    <p class="card-desc">10% drop rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section">
+        <div class="how-container">
+            <div class="section-header">
+                <h2>Sådan virker det</h2>
+                <h3>Fra is til samling</h3>
+            </div>
+
+            <div class="how-grid">
+                <div class="how-step">
+                    <div class="step-icon">🛒</div>
+                    <h4>Køb Vild Is</h4>
+                    <p>Køb dine yndlings Vild Is eller Vild Brus produkter i butikken eller online.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-icon">📱</div>
+                    <h4>Scan & Saml</h4>
+                    <p>Scan QR-koden på produktet og få automatisk tilføjet en collectable til din samling.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-icon">🌍</div>
+                    <h4>Udforsk Verden</h4>
+                    <p>Brug dine collectables i Vild Verden – vores virtuelle univers!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual World Section -->
+    <section class="world-section" id="verden">
+        <div class="world-bg"></div>
+        <div class="grid-overlay"></div>
+        
+        <div class="world-content">
+            <span class="world-badge">✨ Ny Oplevelse</span>
+            <h2>Vild Verden</h2>
+            <p>Træd ind i et virtuelt univers skabt til Vild Is fællesskabet. Udforsk, mød andre samlere, og bring dine bær-avatarer til live!</p>
+            
+            <button class="enter-btn" onclick="window.open('https://vildverden.vildis.dk', '_blank')">
+                ENTER
+                <span class="arrow">→</span>
+            </button>
+
+            <div class="portal-visual">
+                <div class="portal-ring"></div>
+                <div class="portal-ring"></div>
+                <div class="portal-ring"></div>
+                <div class="portal-center">🫐</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Section -->
+    <section class="auth-section" id="login">
+        <div class="auth-container">
+            <div class="section-header">
+                <h2>Min Samling</h2>
+                <h3>Se dine collectables</h3>
+                <p>Log ind med din email for at se hvad du har samlet</p>
+            </div>
+
+            <div class="auth-box">
+                <h4>Log ind eller opret konto</h4>
+                <p>Indtast din email – vi sender dig et login link</p>
+                
+                <form id="auth-form" onsubmit="handleLogin(event)">
+                    <div class="email-input-group">
+                        <input 
+                            type="email" 
+                            class="email-input" 
+                            placeholder="din@email.dk" 
+                            required
+                        >
+                        <button type="submit" class="auth-btn">Log ind</button>
+                    </div>
+                </form>
+                
+                <p class="auth-note">
+                    Ved at logge ind accepterer du vores <a href="#">vilkår</a> og <a href="#">privatlivspolitik</a>
+                </p>
+
+                <div class="powered-by">
+                    <span>Secured by</span>
+                    <svg class="glyph-logo" viewBox="0 0 100 24" fill="currentColor">
+                        <text x="0" y="18" font-family="DM Sans, sans-serif" font-weight="700" font-size="16">GLYPH</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 <a href="https://vildis.dk">VildIs</a> · Økologisk kvalitet fra Thy</p>
+    </footer>
+
+    <script>
+        // Simulated Glyph wallet integration
+        // In production, this would use the actual Glyph SDK
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            
+            // Show loading state
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = 'Sender...';
+            btn.disabled = true;
+            
+            // Simulate Glyph wallet email magic link
+            setTimeout(() => {
+                alert(`Vi har sendt et login link til ${email}\n\nTjek din indbakke!`);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                e.target.reset();
+            }, 1500);
+            
+            // In production:
+            // glyphWallet.sendMagicLink(email).then(() => { ... })
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
