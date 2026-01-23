@@ -260,109 +260,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 3D Rainbow Bridge Styles */
-        .rainbow-scene {
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 2rem 4rem 0;
-            opacity: 0;
-            animation: fadeIn 0.8s 0.7s forwards;
-        }
-
-        .rainbow-3d {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 20px 40px rgba(177, 78, 255, 0.2));
-        }
-
-        /* Arc drawing animation */
-        .arc {
-            stroke-dasharray: 600;
-            stroke-dashoffset: 600;
-            animation: drawArc 1.5s ease-out forwards;
-        }
-
-        .arc-1 { animation-delay: 0.1s; }
-        .arc-2 { animation-delay: 0.2s; }
-        .arc-3 { animation-delay: 0.3s; }
-        .arc-4 { animation-delay: 0.4s; }
-        .arc-5 { animation-delay: 0.5s; }
-        .arc-6 { animation-delay: 0.6s; }
-        .arc-7 { animation-delay: 0.7s; }
-
-        @keyframes drawArc {
-            to { stroke-dashoffset: 0; }
-        }
-
-        /* Bridge floating animation */
-        .rainbow-bridge-group {
-            animation: bridgeFloat 5s ease-in-out infinite;
-            transform-origin: center;
-        }
-
-        @keyframes bridgeFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.3deg); }
-        }
-
-        /* Platform pulse */
-        .platform {
-            animation: platformPulse 3s ease-in-out infinite;
-        }
-
-        .platform-right {
-            animation-delay: 1.5s;
-        }
-
-        @keyframes platformPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Sparkle animations */
-        .sparkle {
-            opacity: 0;
-            animation: sparkle 2.5s ease-in-out infinite;
-        }
-
-        .s1 { animation-delay: 0s; }
-        .s2 { animation-delay: 0.4s; }
-        .s3 { animation-delay: 0.8s; }
-        .s4 { animation-delay: 1.2s; }
-        .s5 { animation-delay: 1.6s; }
-        .s6 { animation-delay: 2s; }
-        .s7 { animation-delay: 2.4s; }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Particle glow */
-        .particle {
-            filter: drop-shadow(0 0 6px currentColor);
-        }
-
-        /* Bridge labels */
-        .bridge-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            fill: var(--gray);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        /* Reflection animation */
-        .rainbow-reflection {
-            animation: reflectionPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes reflectionPulse {
-            0%, 100% { opacity: 0.1; transform: scaleX(1); }
-            50% { opacity: 0.2; transform: scaleX(1.1); }
-        }
-
         /* Services Section */
         .services {
             padding: 8rem 4rem;
@@ -472,6 +369,12 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
+        }
+
+        a.work-item {
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
 
         .work-item {
@@ -641,11 +544,6 @@
                 padding: 7rem 2rem 2rem;
             }
 
-            .rainbow-scene {
-                padding: 2rem 1.5rem 0;
-                max-width: 100%;
-            }
-
             .work-grid {
                 grid-template-columns: 1fr;
             }
@@ -717,7 +615,7 @@
                 <a href="#contact" class="btn btn-ghost">Get In Touch</a>
             </div>
         </div>
-
+    </section>
 
     <section class="services" id="services">
         <div class="section-header">
@@ -770,16 +668,15 @@
         </div>
 
         <div class="work-grid">
-            <div class="work-item">
+            <a href="portfolio1.html" class="work-item">
                 <div class="work-placeholder">
                     <span class="num">01</span>
                 </div>
                 <div class="work-overlay">
-                    <h3 class="work-title">Project Name</h3>
-                    <p class="work-cat">Virtual World</p>
+                    <h3 class="work-title">Havtorn Collection</h3>
+                    <p class="work-cat">Avatar System</p>
                 </div>
-    
-            </div>
+            </a>
 
             <div class="work-item">
                 <div class="work-placeholder">
@@ -809,14 +706,18 @@
             <p class="contact-text">
                 Whether you're exploring your first NFT drop, launching a metaverse presence, or reimagining your brand for Web3 — let's make it happen.
             </p>
-            <a href="/cdn-cgi/l/email-protection#b2dad7dededdf2c4dbc0c6c7d3dec0d3dbdcd0ddc59cd1dddf" class="contact-btn">Start a Conversation</a>
+            <a href="mailto:hello@virtualrainbow.com" class="contact-btn">Start a Conversation</a>
         </div>
     </section>
 
     <footer>
         <div class="footer-left">© 2026 Virtual Rainbow</div>
         <div class="footer-links">
-            <a href="portfolio1.html">Twitter</a>
+            <a href="#">Twitter</a>
             <a href="#">Discord</a>
             <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+</body>
+</html>
